@@ -43,8 +43,8 @@ describe.concurrent(
 
          const resultsWithOption = await searchSettlements({
             query,
-            addScoreToSettlementKind: {
-               city: 1,
+            reduceScoreForSettlementKind: {
+               city: 10,
             },
          })
 
@@ -92,6 +92,15 @@ describe.concurrent(
          })
 
          expect(results.unwrap()).toHaveLength(0)
+      })
+
+      it("Should return the closest matches first", async () => {
+         const query = "Čierne"
+         const results = await searchSettlements({
+            query,
+         })
+
+         expect(results.unwrap()[0]).toBe("Čierne")
       })
    },
    1000,
