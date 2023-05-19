@@ -1,0 +1,20 @@
+{
+   "compilerOptions": {
+      "target": "ES2022" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+      "module": "commonjs" /* Specify what module code is generated. */,
+      "outDir": "./dist" /* Specify the root folder within your source files. */,
+      "rootDir": "./src" /* Specify the root folder for resolving the project. */,
+      "noUncheckedIndexedAccess": true,
+      // "typeRoots": [
+      //    "./node_modules/@types"
+      // ] /* Specify multiple folders that act like `./node_modules/@types`. */,
+      "sourceMap": true /* Create source map files for emitted JavaScript files. */,
+      "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+      "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+      "strict": true /* Enable all strict type-checking options. */,
+      "noImplicitAny": false /* Enable error reporting for expressions and declarations with an implied `any` type.. */,
+      "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
+      "skipLibCheck": true /* Skip type checking all .d.ts files. */
+   },
+   "exclude": ["./tests", "vitest.config.ts", "./node_modules", "./dist"]
+}
