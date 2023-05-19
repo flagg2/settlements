@@ -29,11 +29,24 @@ const indexPaths = {
    },
 }
 
+/**
+ * Search settlements by query. The lower the score, the better the match.
+ *
+ * @param params
+ * @param params.query Query to search for.
+ * @param params.countries Countries to search in.
+ * @param params.settlementKinds Settlement kinds to search in.
+ * @param params.reduceScoreForSettlementKind If you want a settlement kind to be preferred, you can reduce its score. You can experiment with the score to get the best results.
+ * @param params.limit Limit the number of results.
+ * @param params.threshold Threshold for fuzzy search. If you want to disable fuzzy search, set this to 0.
+ * @returns Array of settlement names.
+ */
+
 async function searchSettlements<T extends keyof ByCountry>(params: {
    query: string
    countries?: T[]
    settlementKinds?: ByCountry[T][]
-   addScoreToSettlementKind?: {
+   reduceScoreForSettlementKind?: {
       [key in ByCountry[T]]?: number
    }
    limit?: number
@@ -44,7 +57,7 @@ async function searchSettlements<T extends keyof ByCountry>(params: {
          query,
          countries = ["slovakia"] as T[],
          settlementKinds = ["city", "village"] as ByCountry[T][],
-         addScoreToSettlementKind = {} as {
+         reduceScoreForSettlementKind = {} as {
             [key in ByCountry[T]]?: number
          },
          threshold = 0.3,
@@ -109,19 +122,20 @@ async function searchSettlements<T extends keyof ByCountry>(params: {
             index,
          )
 
-         const extraScore = addScoreToSettlementKind[settlementKinds[i]!] ?? 0
+         const extraScore =
+            reduceScoreForSettlementKind[settlementKinds[i]!] ?? 0
 
          results = [
             ...results,
             ...(fuse.search(query).map((result) => ({
                ...result,
-               score: (result.score ?? 0) + extraScore,
+               score: (result.score ?? 0) - extraScore,
             })) as SearchHit[]),
          ]
       }
 
       return results
-         .sort((a, b) => b.score - a.score)
+         .sort((a, b) => a.score - b.score)
          .map((result) => result.item.name)
          .slice(0, params.limit)
    })
