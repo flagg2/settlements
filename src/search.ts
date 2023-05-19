@@ -1,6 +1,7 @@
 import { AsyncResult, Result } from "@flagg2/result"
 import { readFile } from "fs"
 import Fuse from "fuse.js"
+import path from "path"
 
 type ByCountry = {
    slovakia: "city" | "village"
@@ -16,24 +17,16 @@ type SearchHit = {
 
 const dataPaths = {
    slovakia: {
-      city: "data/slovakia/cities.json",
-      village: "data/slovakia/villages.json",
+      city: path.join(__dirname, "..", "data/slovakia/cities.json"),
+      village: path.join(__dirname, "..", "data/slovakia/villages.json"),
    },
-} satisfies {
-   [key in keyof ByCountry]: {
-      [key2 in ByCountry[key]]: string
-   }
 }
 
 const indexPaths = {
    slovakia: {
-      city: "indexes/slovakia/cities.json",
-      village: "indexes/slovakia/villages.json",
+      city: path.join(__dirname, "..", "indexes/slovakia/cities.json"),
+      village: path.join(__dirname, "..", "indexes/slovakia/villages.json"),
    },
-} satisfies {
-   [key in keyof ByCountry]: {
-      [key2 in ByCountry[key]]: string
-   }
 }
 
 async function searchSettlements<T extends keyof ByCountry>(params: {
