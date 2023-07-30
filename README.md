@@ -1,6 +1,6 @@
 # Settlements
 
-A library which allows for effiecient search for settlements using fuse.js. Can be used for free searching
+A [library](https://www.npmjs.com/package/@flagg2/settlements?activeTab=dependencies) which allows for effiecient search for settlements using fuse.js. Can be used for free searching
 within autocomplete features for cities and towns.
 
 ## Currently supported countries
